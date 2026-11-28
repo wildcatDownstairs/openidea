@@ -4437,5 +4437,8 @@
   "Keep Key": "Keep Key",
   "Drop Index": "Drop Index",
   "Keep Index": "Keep Index",
-  "SQLite cannot drop the index of a primary key or unique constraint.": "SQLite cannot drop the index of a primary key or unique constraint."
+  "SQLite cannot drop the index of a primary key or unique constraint.": "SQLite cannot drop the index of a primary key or unique constraint.",
+  "Run Highlighted Command Using IDE": "Run Highlighted Command Using IDE",
+  "Run commands using IDE": "Run commands using IDE",
+  "Highlights typed commands the IDE recognises (pytest, npm run, Gradle tasks…), so Run Highlighted Command Using IDE runs them in the Run tool window.": "Highlights typed commands the IDE recognises (pytest, npm run, Gradle tasks…), so Run Highlighted Command Using IDE runs them in the Run tool window."
 }

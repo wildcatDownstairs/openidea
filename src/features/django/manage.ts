@@ -182,6 +182,11 @@ export function manageRunAnything(run: (config: RunConfig) => unknown): RunAnyth
       void loadManage();
       return commandItems(query, useManage.getState().commands, (line) => void runManageLine(line, run));
     },
+    accepts(line) {
+      if (!manageArgs(line)) return false;
+      void loadManage();
+      return !!useManage.getState().manage;
+    },
     execute: (line) => runManageLine(line, run),
     subscribe: (listener) => useManage.subscribe((s, prev) => s.commands !== prev.commands && listener()),
   };
