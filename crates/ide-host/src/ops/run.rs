@@ -439,6 +439,7 @@ async fn start_inner(
                     python_paths: Vec::new(),
                     ruby_reporter: None,
                     plots: None,
+                    conda_prefix: None,
                 },
                 sink,
                 Box::new(move |c| on_output(c)),
@@ -456,6 +457,7 @@ async fn start_inner(
                 // A folder on this machine: not in the container.
                 ruby_reporter: None,
                 plots: None,
+                conda_prefix: None,
             };
             project.require_trust()?;
             return host.processes.start(
@@ -538,6 +540,7 @@ async fn start_inner(
             .await?;
     }
     let mut python_paths = if *root != project.root { vec![root.clone()] } else { super::python::paths(&project) };
+    let mut conda_prefix = None;
     if is_python {
         let near = ide_run::scope::owner(&project.root, &config);
         python_paths = super::python::with_user_paths(
@@ -547,6 +550,7 @@ async fn start_inner(
             Some(&config.command),
             Some(&near),
         );
+        conda_prefix = super::python::conda_prefix(&host.config_dir, &project, Some(&config.command), Some(&near));
     }
     let encoding = settings.console.encoding;
     let options = StartOptions {
@@ -554,6 +558,7 @@ async fn start_inner(
         python_paths,
         ruby_reporter: ruby_reporter_dir(host, &config),
         plots: if is_python { super::plots::prepare(host, &project).await } else { None },
+        conda_prefix,
     };
     project.require_trust()?;
     if config.kind == "go" && matches!(config.args.first().map(String::as_str), Some("mod" | "work")) {
